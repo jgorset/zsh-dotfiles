@@ -45,3 +45,6 @@ eval "$(rbenv init -)"
 
 # Don't autocorrect
 unsetopt correct_all
+
+# Set locale
+export LC_ALL=en_US.UTF-8

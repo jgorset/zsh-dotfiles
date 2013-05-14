@@ -42,6 +42,9 @@ export PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/git/bin
 # Homebrew
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
+# NPM
+export PATH=/usr/local/share/npm/bin:$PATH
+
 # Ruby environment
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"

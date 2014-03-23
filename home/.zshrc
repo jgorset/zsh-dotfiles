@@ -10,6 +10,9 @@ GOPATH=$HOME/code/go
 # time that oh-my-zsh is loaded.
 ZSH_THEME="jgorset"
 
+# Configure default editor
+export EDITOR="vim"
+
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
@@ -49,11 +52,30 @@ export PATH=/usr/local/share/npm/bin:$PATH
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
+# Direnv
+eval "$(direnv hook zsh)"
+
 # Don't autocorrect
 unsetopt correct_all
 
 # Set locale
 export LC_ALL=en_US.UTF-8
 
+# Homebrew authentication for GitHub
+export HOMEBREW_GITHUB_API_TOKEN="d53baa1aed59343a6a0523cc827b9ace0e49a613"
+
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+# Setup zsh-autosuggestions
+source ~/.zsh-autosuggestions/autosuggestions.zsh
+
+# Enable autosuggestions automatically
+zle-line-init() {
+    zle autosuggest-start
+}
+zle -N zle-line-init
+
+# use ctrl+t to toggle autosuggestions(hopefully this wont be needed as
+# zsh-autosuggestions is designed to be unobtrusive)
+bindkey '^T' autosuggest-toggle

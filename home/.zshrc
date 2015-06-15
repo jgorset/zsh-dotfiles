@@ -55,6 +55,9 @@ eval "$(rbenv init -)"
 # Direnv
 eval "$(direnv hook zsh)"
 
+# Tmuxinator
+source ~/.oh-my-zsh/completions/tmuxinator.zsh
+
 # Don't autocorrect
 unsetopt correct_all
 

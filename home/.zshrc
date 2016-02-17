@@ -62,3 +62,6 @@ export LC_ALL=en_US.UTF-8
 
 # Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+# chruby
+source /usr/local/opt/chruby/share/chruby/chruby.sh

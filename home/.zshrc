@@ -48,10 +48,6 @@ export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 # NPM
 export PATH=/usr/local/share/npm/bin:$PATH
 
-# Ruby environment
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-
 # Direnv
 eval "$(direnv hook zsh)"
 

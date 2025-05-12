@@ -1,5 +1,6 @@
 alias vim="nvim"
 alias vi="nvim"
+alias g="git"
 alias gs="git status"
 alias gc="git commit"
 alias ga="git add"

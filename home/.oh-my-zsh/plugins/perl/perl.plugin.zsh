@@ -21,13 +21,13 @@ alias pd='perldoc'
 alias ple='perl -wlne'
 
 # show the latest stable release of Perl
-alias latest-perl='curl -s http://www.perl.org/get.html | perl -wlne '\''if (/perl\-([\d\.]+)\.tar\.gz/) { print $1; exit;}'\'
+alias latest-perl='curl -s https://www.perl.org/get.html | perl -wlne '\''if (/perl\-([\d\.]+)\.tar\.gz/) { print $1; exit;}'\'
 
 
 
 # Functions #################################################################
 
-# newpl - creates a basic Perl script file and opens it with $EDITOR 
+# newpl - creates a basic Perl script file and opens it with $EDITOR
 newpl () {
 	# set $EDITOR to 'vim' if it is undefined
 	[[ -z $EDITOR ]] && EDITOR=vim
@@ -55,8 +55,11 @@ prep() { # [pattern] [filename unless STDOUT]
     perl -nle 'print if /'"$1"'/;' $2
 }
 
-# say - append a newline to 'print'
-say() {
-    print "$1\n"
-}
-
+# If the 'perlbrew' function isn't defined, perlbrew isn't setup.
+if [[ $ZSH_PERLBREW_ACTIVATE != false ]] && (( ! $+functions[perlbrew] )); then
+  local _perlbrew="${PERLBREW_ROOT:-${HOME}/perl5/perlbrew}"
+  if [[ -f "${_perlbrew}/etc/bashrc" ]]; then
+    source "${_perlbrew}/etc/bashrc"
+  fi
+  unset _perlbrew
+fi

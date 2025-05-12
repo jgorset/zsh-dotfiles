@@ -1,26 +1,17 @@
-# Based on ssh-agent code
+export GPG_TTY=$TTY
 
-local GPG_ENV=$HOME/.gnupg/gpg-agent.env
-
-function start_agent {
-  /usr/bin/env gpg-agent --daemon --enable-ssh-support --write-env-file ${GPG_ENV} > /dev/null
-  chmod 600 ${GPG_ENV}
-  . ${GPG_ENV} > /dev/null
+# Fix for passphrase prompt on the correct tty
+# See https://www.gnupg.org/documentation/manuals/gnupg/Agent-Options.html#option-_002d_002denable_002dssh_002dsupport
+function _gpg-agent_update-tty_preexec {
+  gpg-connect-agent updatestartuptty /bye &>/dev/null
 }
+autoload -U add-zsh-hook
+add-zsh-hook preexec _gpg-agent_update-tty_preexec
 
-# Source GPG agent settings, if applicable
-if [ -f "${GPG_ENV}" ]; then
-  . ${GPG_ENV} > /dev/null
-  ps -ef | grep ${SSH_AGENT_PID} | grep gpg-agent > /dev/null || {
-    start_agent;
-  }
-else
-  start_agent;
+# If enable-ssh-support is set, fix ssh agent integration
+if [[ $(gpgconf --list-options gpg-agent 2>/dev/null | awk -F: '$1=="enable-ssh-support" {print $10}') = 1 ]]; then
+  unset SSH_AGENT_PID
+  if [[ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]]; then
+    export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+  fi
 fi
-
-export GPG_AGENT_INFO
-export SSH_AUTH_SOCK
-export SSH_AGENT_PID
-
-GPG_TTY=$(tty)
-export GPG_TTY
